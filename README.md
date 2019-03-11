@@ -10,7 +10,7 @@ It provides an easy to use api to be used in your integration tests.
 #### Postgres 11
 
 ```go
-dockertestHelper, err := dockertestwrapper.InitPostgres11Container()
+dockertesthelper, err := dockertestwrapper.InitPostgres11Container()
 if err != nil {
 	// ...
 }
@@ -24,7 +24,7 @@ if err := dockertesthelper.PurgeContainer(); err != nil {
 #### Postgres 10
 
 ```go
-dockertestHelper, err := dockertestwrapper.InitPostgres10Container()
+dockertesthelper, err := dockertestwrapper.InitPostgres10Container()
 if err != nil {
 	// ...
 }
@@ -38,7 +38,7 @@ if err := dockertesthelper.PurgeContainer(); err != nil {
 #### Postgres Custom Version
 
 ```go
-dockertestHelper, err := dockertestwrapper.InitPostgresContainer("9.6")
+dockertesthelper, err := dockertestwrapper.InitPostgresContainer("9.6")
 if err != nil {
 	// ...
 }
@@ -63,7 +63,7 @@ params := dockertestwrapper.WrapperParams{
 	},
 }
 
-dockertestHelper, err := dockertestwrapper.InitContainer(params)
+dockertesthelper, err := dockertestwrapper.InitContainer(params)
 if err != nil {
 	// ...
 }
