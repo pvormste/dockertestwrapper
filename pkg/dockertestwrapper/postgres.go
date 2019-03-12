@@ -10,12 +10,6 @@ import (
 // PostgresImageName is the image name of the postgres docker image
 const PostgresImageName string = "postgres"
 
-// Possible postgres image versions
-const (
-	PostgresImageVersion10 string = "10"
-	PostgresImageVersion11 string = "11"
-)
-
 // Default postgres connection details
 const (
 	DefaultPostgresPort     string = "5432/tcp"
@@ -23,6 +17,12 @@ const (
 	DefaultPostgresPassword string = "postgres"
 	DefaultPostgresDatabase string = "postgres"
 )
+
+var postgresImageTags = map[string]string{
+	"11":  "11",
+	"10":  "10",
+	"9.6": "9.6",
+}
 
 // InitPostgresContainer starts a postgres container with the given tag and the default credentials
 func InitPostgresContainer(tag string) (*WrapperInstance, error) {

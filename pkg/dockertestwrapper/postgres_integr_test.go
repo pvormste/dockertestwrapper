@@ -1,27 +1,22 @@
 package dockertestwrapper
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
 
 func TestInitPostgresContainer(t *testing.T) {
-	t.Run("should start and purge a postgres 11 container successfully", func(t *testing.T) {
-		wrapper, err := InitPostgresContainer(PostgresImageVersion11)
-		assert.NoError(t, err)
-		require.NotNil(t, wrapper)
+	for postgresVersion, postgresTag := range postgresImageTags {
+		it := fmt.Sprintf("should start and purge a postgres %s container successfully", postgresVersion)
+		t.Run(it, func(t *testing.T) {
+			wrapper, err := InitPostgresContainer(postgresTag)
+			assert.NoError(t, err)
+			require.NotNil(t, wrapper)
 
-		err = wrapper.PurgeContainer()
-		assert.NoError(t, err)
-	})
-
-	t.Run("should start and purge a postgres 10 container successfully", func(t *testing.T) {
-		wrapper, err := InitPostgresContainer(PostgresImageVersion10)
-		assert.NoError(t, err)
-		require.NotNil(t, wrapper)
-
-		err = wrapper.PurgeContainer()
-		assert.NoError(t, err)
-	})
+			err = wrapper.PurgeContainer()
+			assert.NoError(t, err)
+		})
+	}
 }
