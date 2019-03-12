@@ -10,12 +10,6 @@ import (
 // PostgresImageName is the image name of the postgres docker image
 const PostgresImageName string = "postgres"
 
-// Possible postgres image versions
-const (
-	PostgresImageVersion10 string = "10"
-	PostgresImageVersion11 string = "11"
-)
-
 // Default postgres connection details
 const (
 	DefaultPostgresPort     string = "5432/tcp"
