@@ -24,6 +24,7 @@ const (
 	DefaultPostgresDatabase string = "postgres"
 )
 
+// InitPostgresContainer starts a postgres container with the given version and the default credentials
 func InitPostgresContainer(version string) (*WrapperInstance, error) {
 	userEnv := fmt.Sprintf("POSTGRES_USER=%s", DefaultPostgresUser)
 	passwordEnv := fmt.Sprintf("POSTGRES_PASSWORD=%s", DefaultPostgresPassword)
