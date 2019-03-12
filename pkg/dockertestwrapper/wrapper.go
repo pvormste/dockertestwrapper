@@ -7,18 +7,22 @@ import (
 	"strings"
 )
 
+// DefaultContainerExpiresAfterSeconds tells docker the hard limit in seconds when the container should be purged
 const DefaultContainerExpiresAfterSeconds uint = 1800
 
+// AfterInitActionFunc is a function type which will be executed after container initialization
 type AfterInitActionFunc func(dockerHost string, hostPort int) error
 
+// WrapperParams contains all parameters needed to start a new custom container
 type WrapperParams struct {
 	ImageName           string
-	ImageVersion        string
+	ImageTag            string
 	EnvVariables        []string
 	ContainerPort       string
 	AfterInitActionFunc AfterInitActionFunc
 }
 
+// WrapperInstance holds all the information of the running container
 type WrapperInstance struct {
 	DockerHost string
 	HostPort   int
@@ -26,6 +30,7 @@ type WrapperInstance struct {
 	Resource   *dockertest.Resource
 }
 
+// InitContainer starts a new container with the given parameters
 func InitContainer(params WrapperParams) (instance *WrapperInstance, err error) {
 	instance = &WrapperInstance{}
 	instance.Pool, err = dockertest.NewPool("")
@@ -33,7 +38,7 @@ func InitContainer(params WrapperParams) (instance *WrapperInstance, err error) 
 		return nil, err
 	}
 
-	instance.Resource, err = instance.Pool.Run(params.ImageName, params.ImageVersion, params.EnvVariables)
+	instance.Resource, err = instance.Pool.Run(params.ImageName, params.ImageTag, params.EnvVariables)
 	if err != nil {
 		return nil, err
 	}
@@ -60,6 +65,7 @@ func InitContainer(params WrapperParams) (instance *WrapperInstance, err error) 
 	return instance, nil
 }
 
+// PurgeContainer purges the running container
 func (w WrapperInstance) PurgeContainer() error {
 	return w.Pool.Purge(w.Resource)
 }

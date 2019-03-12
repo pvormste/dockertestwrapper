@@ -7,69 +7,72 @@ It provides an easy to use api to be used in your integration tests.
 
 ### Postgres
 
-#### Postgres 11
+The postgres helper function can be used to start a postgres container with default credentials/connection details.
+
+Although it should be possible to start any postgres version with the `InitPostgresContainer` function, following
+images are covered by tests in this repository:
+  - postgres:11
+  - postgres:10
+
+#### Connection details
+
+| name | value |
+| -----| ----- |
+| host | `postgresContainer.DockerHost` |
+| port | `postgresContainer.HostPort` |
+| user | postgres |
+| password | postgres |
+| database | postgres |
+
+#### Start and purge a postgres container
 
 ```go
-dockertesthelper, err := dockertestwrapper.InitPostgres11Container()
+postgresContainer, err := dockertestwrapper.InitPostgresContainer("9.6")
 if err != nil {
 	// ...
 }
 
 
-if err := dockertesthelper.PurgeContainer(); err != nil {
-	// ...
-}
-```
-
-#### Postgres 10
-
-```go
-dockertesthelper, err := dockertestwrapper.InitPostgres10Container()
-if err != nil {
-	// ...
-}
-
-
-if err := dockertesthelper.PurgeContainer(); err != nil {
-	// ...
-}
-```
-
-#### Postgres Custom Version
-
-```go
-dockertesthelper, err := dockertestwrapper.InitPostgresContainer("9.6")
-if err != nil {
-	// ...
-}
-
-
-if err := dockertesthelper.PurgeContainer(); err != nil {
+if err := postgresContainer.PurgeContainer(); err != nil {
 	// ...
 }
 ```
 
 ### Custom Container 
 
+You can start any container with this library, just populate the `WrapperParams` struct and pass it to the `InitContainer` function
+
+#### WrapperParams
+
+| field | descritpion | example |
+| ----- | ----------- | ------- |
+| ImageName | name of the image | `"mysql`" |
+| ImageTag | tag of the image | `"5.7"` |
+| EnvVariables | env variables to be passed to container | `[]string{"MYSQL_ROOT_PASSWORD=mysql"}` |
+| ContainerPort | exported port on container | `"3306/tcp"` |
+| AfterInitActionFunc | function which will be executed after container initialization | see postgres.go for an example |
+
+#### Example
+
 ```go
 params := dockertestwrapper.WrapperParams{
 	ImageName: "golang",
-	ImageVersion: "1.12",
+	ImageTag: "1.12",
 	EnvVariables: []string{},
-	ContainerPort: 80,
+	ContainerPort: "80/tcp",
 	AfterInitActionFunc: func(dockerHost string, hostPort int) error {
 		// Start a webserver or something
 		return nil
 	},
 }
 
-dockertesthelper, err := dockertestwrapper.InitContainer(params)
+customContainer, err := dockertestwrapper.InitContainer(params)
 if err != nil {
 	// ...
 }
 
 
-if err := dockertesthelper.PurgeContainer(); err != nil {
+if err := customContainer.PurgeContainer(); err != nil {
 	// ...
 }
 ```

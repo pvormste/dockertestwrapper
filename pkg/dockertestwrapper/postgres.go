@@ -24,28 +24,21 @@ const (
 	DefaultPostgresDatabase string = "postgres"
 )
 
-func InitPostgresContainer(version string) (*WrapperInstance, error) {
+// InitPostgresContainer starts a postgres container with the given tag and the default credentials
+func InitPostgresContainer(tag string) (*WrapperInstance, error) {
 	userEnv := fmt.Sprintf("POSTGRES_USER=%s", DefaultPostgresUser)
 	passwordEnv := fmt.Sprintf("POSTGRES_PASSWORD=%s", DefaultPostgresPassword)
 	databaseEnv := fmt.Sprintf("POSTGRES_DB=%s", DefaultPostgresDatabase)
 
 	params := WrapperParams{
 		ImageName:           PostgresImageName,
-		ImageVersion:        version,
+		ImageTag:            tag,
 		EnvVariables:        []string{userEnv, passwordEnv, databaseEnv},
 		ContainerPort:       DefaultPostgresPort,
 		AfterInitActionFunc: postgresAfterInitAction,
 	}
 
 	return InitContainer(params)
-}
-
-func InitPostgres11Container() (*WrapperInstance, error) {
-	return InitPostgresContainer(PostgresImageVersion11)
-}
-
-func InitPostgres10Container() (*WrapperInstance, error) {
-	return InitPostgresContainer(PostgresImageVersion10)
 }
 
 func postgresAfterInitAction(dockerHost string, hostPort int) error {
