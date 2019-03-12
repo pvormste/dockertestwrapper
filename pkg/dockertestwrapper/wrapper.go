@@ -16,7 +16,7 @@ type AfterInitActionFunc func(dockerHost string, hostPort int) error
 // WrapperParams contains all parameters needed to start a new custom container
 type WrapperParams struct {
 	ImageName           string
-	ImageVersion        string
+	ImageTag            string
 	EnvVariables        []string
 	ContainerPort       string
 	AfterInitActionFunc AfterInitActionFunc
@@ -38,7 +38,7 @@ func InitContainer(params WrapperParams) (instance *WrapperInstance, err error) 
 		return nil, err
 	}
 
-	instance.Resource, err = instance.Pool.Run(params.ImageName, params.ImageVersion, params.EnvVariables)
+	instance.Resource, err = instance.Pool.Run(params.ImageName, params.ImageTag, params.EnvVariables)
 	if err != nil {
 		return nil, err
 	}
