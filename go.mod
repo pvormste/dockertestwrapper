@@ -8,7 +8,7 @@ require (
 	github.com/containerd/continuity v0.0.0-20181203112020-004b46473808 // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.3.3 // indirect
-	github.com/gotestyourself/gotestyourself v2.2.0+incompatible // indirect
+	github.com/gotestyourself/gotestyourself v2.3.0 // indirect
 	github.com/lib/pq v1.0.0
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/opencontainers/image-spec v1.0.1 // indirect
