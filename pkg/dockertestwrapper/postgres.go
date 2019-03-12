@@ -18,12 +18,6 @@ const (
 	DefaultPostgresDatabase string = "postgres"
 )
 
-var postgresImageTags = map[string]string{
-	"11":  "11",
-	"10":  "10",
-	"9.6": "9.6",
-}
-
 // InitPostgresContainer starts a postgres container with the given tag and the default credentials
 func InitPostgresContainer(tag string) (*WrapperInstance, error) {
 	userEnv := fmt.Sprintf("POSTGRES_USER=%s", DefaultPostgresUser)
