@@ -1,6 +1,6 @@
 # dockertestwrapper [![Build Status](https://travis-ci.org/pvormste/dockertestwrapper.svg?branch=master)](https://travis-ci.org/pvormste/dockertestwrapper)
 
-As the name suggests dockertestwrapper is a wrapper for orys awesome [dockertest library](https://github.com/ory/dockertest).  
+As the name suggests dockertestwrapper is a wrapper for [orys awesome dockertest library](https://github.com/ory/dockertest).  
 It provides an easy to use api to be used in your integration tests.
 
 ## Usage
@@ -11,8 +11,9 @@ The postgres helper function can be used to start a postgres container with defa
 
 Although it should be possible to start any postgres version with the `InitPostgresContainer` function, following
 images are covered by tests in this repository:
-  - postgres:11
-  - postgres:10
+  - postgres:11-alpine
+  - postgres:10-alpine
+  - postgres:9.6-alpine
 
 #### Connection details
 
