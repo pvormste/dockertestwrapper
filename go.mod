@@ -8,7 +8,6 @@ require (
 	github.com/containerd/continuity v0.0.0-20181203112020-004b46473808 // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.3.3 // indirect
-	github.com/google/go-cmp v0.2.0 // indirect
 	github.com/gotestyourself/gotestyourself v2.2.0+incompatible // indirect
 	github.com/lib/pq v1.0.0
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
@@ -20,5 +19,5 @@ require (
 	github.com/stretchr/testify v1.2.2
 	golang.org/x/net v0.0.0-20190311031020-56fb01167e7d // indirect
 	golang.org/x/sys v0.0.0-20190310054646-10058d7d4faa // indirect
-	gotest.tools v2.3.0 // indirect
+	gotest.tools v0.0.0-20181223230014-1083505acf35 // indirect
 )
