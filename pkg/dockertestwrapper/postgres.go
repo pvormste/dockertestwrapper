@@ -40,14 +40,6 @@ func InitPostgresContainer(version string) (*WrapperInstance, error) {
 	return InitContainer(params)
 }
 
-func InitPostgres11Container() (*WrapperInstance, error) {
-	return InitPostgresContainer(PostgresImageVersion11)
-}
-
-func InitPostgres10Container() (*WrapperInstance, error) {
-	return InitPostgresContainer(PostgresImageVersion10)
-}
-
 func postgresAfterInitAction(dockerHost string, hostPort int) error {
 	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		dockerHost, hostPort, DefaultPostgresUser, DefaultPostgresPassword, DefaultPostgresDatabase)
