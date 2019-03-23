@@ -11,7 +11,7 @@ import (
 const DefaultContainerExpiresAfterSeconds uint = 1800
 
 // AfterInitActionFunc is a function type which will be executed after container initialization
-type AfterInitActionFunc func(dockerHost string, hostPort int) error
+type AfterInitActionFunc func(hostname string, port int) error
 
 // WrapperParams contains all parameters needed to start a new custom container
 type WrapperParams struct {
@@ -24,8 +24,10 @@ type WrapperParams struct {
 
 // WrapperInstance holds all the information of the running container
 type WrapperInstance struct {
-	DockerHost string
-	HostPort   int
+	Hostname   string
+	Port       int
+	DockerHost string // deprecated
+	HostPort   int    // deprecated
 	Pool       *dockertest.Pool
 	Resource   *dockertest.Resource
 }
@@ -47,16 +49,16 @@ func InitContainer(params WrapperParams) (instance *WrapperInstance, err error) 
 		return nil, err
 	}
 
-	if err := instance.determineDockerHost(); err != nil {
+	if err := instance.determineHostname(); err != nil {
 		return nil, err
 	}
 
-	if err := instance.determineHostPort(params.ContainerPort); err != nil {
+	if err := instance.determinePort(params.ContainerPort); err != nil {
 		return nil, err
 	}
 
 	err = instance.Pool.Retry(func() error {
-		return params.AfterInitActionFunc(instance.DockerHost, instance.HostPort)
+		return params.AfterInitActionFunc(instance.Hostname, instance.Port)
 	})
 	if err != nil {
 		return nil, err
@@ -70,9 +72,9 @@ func (w WrapperInstance) PurgeContainer() error {
 	return w.Pool.Purge(w.Resource)
 }
 
-func (w *WrapperInstance) determineDockerHost() error {
+func (w *WrapperInstance) determineHostname() error {
 	if strings.HasPrefix(w.Pool.Client.Endpoint(), "unix://") {
-		w.DockerHost = "localhost"
+		w.Hostname = "localhost"
 		return nil
 	}
 
@@ -82,16 +84,18 @@ func (w *WrapperInstance) determineDockerHost() error {
 		return err
 	}
 
-	w.DockerHost = endpointUrl.Hostname()
+	w.Hostname = endpointUrl.Hostname()
+	w.DockerHost = w.Hostname // will be removed in a future update
 	return nil
 }
 
-func (w *WrapperInstance) determineHostPort(containerPort string) (err error) {
+func (w *WrapperInstance) determinePort(containerPort string) (err error) {
 	stringPort := w.Resource.GetPort(containerPort)
-	w.HostPort, err = strconv.Atoi(stringPort)
+	w.Port, err = strconv.Atoi(stringPort)
 	if err != nil {
 		return err
 	}
 
+	w.HostPort = w.Port // will be remove in a future update
 	return nil
 }

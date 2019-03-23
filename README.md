@@ -19,8 +19,8 @@ images are covered by tests in this repository:
 
 | name | value |
 | -----| ----- |
-| host | `postgresContainer.DockerHost` |
-| port | `postgresContainer.HostPort` |
+| host | `postgresContainer.Hostname` |
+| port | `postgresContainer.Port` |
 | user | postgres |
 | password | postgres |
 | database | postgres |
@@ -41,7 +41,8 @@ if err := postgresContainer.PurgeContainer(); err != nil {
 
 ### Custom Container 
 
-You can start any container with this library, just populate the `WrapperParams` struct and pass it to the `InitContainer` function
+You can start any container with this library, just populate the `WrapperParams` struct and pass it to the `InitContainer` function.  
+The Hostname and Port will then be available via the fields `container.Hostname` and `container.Port`.
 
 #### WrapperParams
 
@@ -73,10 +74,21 @@ if err != nil {
 }
 
 
+hostname := customContainer.Hostname
+port := customContainer.Port
+
+
 if err := customContainer.PurgeContainer(); err != nil {
 	// ...
 }
 ```
+
+## Using with Gitlab CI
+
+If you want to use this library with Gitlab CI you may be interested in my fork of the
+docker image: [pvormste/docker-go](https://github.com/pvormste/docker)  
+You can also find it on the DockerHub: [pvormste/docker-go](https://hub.docker.com/r/pvormste/docker-go)
+
 
 ## License
 
