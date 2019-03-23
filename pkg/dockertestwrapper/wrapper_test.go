@@ -54,10 +54,10 @@ func TestWrapperInstance_DetermineHostname(t *testing.T) {
 }
 
 // ===========================
-// wrapper.determineHostPort()
+// wrapper.determinePort()
 // ===========================
 
-var wrapperInstanceDetermineHostPortTests = []struct {
+var wrapperInstanceDeterminePortTests = []struct {
 	it                 string
 	inputContainerPort string
 	internalHostPort   string
@@ -69,7 +69,7 @@ var wrapperInstanceDetermineHostPortTests = []struct {
 		internalHostPort:   "5432/tcp",
 		doAssertions: func(t *testing.T, instance WrapperInstance, actualErr error) {
 			assert.Error(t, actualErr)
-			assert.Equal(t, 0, instance.HostPort)
+			assert.Equal(t, 0, instance.Port)
 		},
 	},
 	{
@@ -78,13 +78,13 @@ var wrapperInstanceDetermineHostPortTests = []struct {
 		internalHostPort:   "5432",
 		doAssertions: func(t *testing.T, instance WrapperInstance, actualErr error) {
 			assert.NoError(t, actualErr)
-			assert.Equal(t, 5432, instance.HostPort)
+			assert.Equal(t, 5432, instance.Port)
 		},
 	},
 }
 
-func TestWrapperInstance_DetermineHostPort(t *testing.T) {
-	for _, test := range wrapperInstanceDetermineHostPortTests {
+func TestWrapperInstance_DeterminePort(t *testing.T) {
+	for _, test := range wrapperInstanceDeterminePortTests {
 		test := test
 		t.Run(test.it, func(t *testing.T) {
 			mockedPortBinding := map[docker.Port][]docker.PortBinding{}
@@ -106,7 +106,7 @@ func TestWrapperInstance_DetermineHostPort(t *testing.T) {
 				Resource: &mockedResource,
 			}
 
-			actualErr := actualWrapper.determineHostPort(test.inputContainerPort)
+			actualErr := actualWrapper.determinePort(test.inputContainerPort)
 			test.doAssertions(t, actualWrapper, actualErr)
 		})
 	}
