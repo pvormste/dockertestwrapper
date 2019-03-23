@@ -24,8 +24,10 @@ type WrapperParams struct {
 
 // WrapperInstance holds all the information of the running container
 type WrapperInstance struct {
-	DockerHost string
-	HostPort   int
+	Hostname   string
+	Port       int
+	DockerHost string // deprecated
+	HostPort   int    // deprecated
 	Pool       *dockertest.Pool
 	Resource   *dockertest.Resource
 }
@@ -47,7 +49,7 @@ func InitContainer(params WrapperParams) (instance *WrapperInstance, err error) 
 		return nil, err
 	}
 
-	if err := instance.determineDockerHost(); err != nil {
+	if err := instance.determineHostname(); err != nil {
 		return nil, err
 	}
 
@@ -56,7 +58,7 @@ func InitContainer(params WrapperParams) (instance *WrapperInstance, err error) 
 	}
 
 	err = instance.Pool.Retry(func() error {
-		return params.AfterInitActionFunc(instance.DockerHost, instance.HostPort)
+		return params.AfterInitActionFunc(instance.Hostname, instance.HostPort)
 	})
 	if err != nil {
 		return nil, err
@@ -70,9 +72,9 @@ func (w WrapperInstance) PurgeContainer() error {
 	return w.Pool.Purge(w.Resource)
 }
 
-func (w *WrapperInstance) determineDockerHost() error {
+func (w *WrapperInstance) determineHostname() error {
 	if strings.HasPrefix(w.Pool.Client.Endpoint(), "unix://") {
-		w.DockerHost = "localhost"
+		w.Hostname = "localhost"
 		return nil
 	}
 
@@ -82,7 +84,8 @@ func (w *WrapperInstance) determineDockerHost() error {
 		return err
 	}
 
-	w.DockerHost = endpointUrl.Hostname()
+	w.Hostname = endpointUrl.Hostname()
+	w.DockerHost = w.Hostname // will be removed in a future update
 	return nil
 }
 
