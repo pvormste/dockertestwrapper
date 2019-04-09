@@ -23,6 +23,7 @@ var wrapperInstanceDetermineHostnameTests = []struct {
 		doAssertions: func(t *testing.T, actualInstance WrapperInstance, actualErr error) {
 			assert.NoError(t, actualErr)
 			assert.Equal(t, "localhost", actualInstance.Hostname)
+			assert.Equal(t, "localhost", actualInstance.DockerHost) // will be removed in a future update
 		},
 	},
 	{
@@ -31,6 +32,7 @@ var wrapperInstanceDetermineHostnameTests = []struct {
 		doAssertions: func(t *testing.T, actualInstance WrapperInstance, actualErr error) {
 			assert.NoError(t, actualErr)
 			assert.Equal(t, "docker", actualInstance.Hostname)
+			assert.Equal(t, "docker", actualInstance.DockerHost) // will be removed in a future update
 		},
 	},
 }
@@ -70,6 +72,7 @@ var wrapperInstanceDeterminePortTests = []struct {
 		doAssertions: func(t *testing.T, instance WrapperInstance, actualErr error) {
 			assert.Error(t, actualErr)
 			assert.Equal(t, 0, instance.Port)
+			assert.Equal(t, 0, instance.HostPort) // will be removed in a future update
 		},
 	},
 	{
@@ -79,6 +82,7 @@ var wrapperInstanceDeterminePortTests = []struct {
 		doAssertions: func(t *testing.T, instance WrapperInstance, actualErr error) {
 			assert.NoError(t, actualErr)
 			assert.Equal(t, 5432, instance.Port)
+			assert.Equal(t, 5432, instance.HostPort) // will be removed in a future update
 		},
 	},
 }

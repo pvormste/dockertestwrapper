@@ -75,6 +75,7 @@ func (w WrapperInstance) PurgeContainer() error {
 func (w *WrapperInstance) determineHostname() error {
 	if strings.HasPrefix(w.Pool.Client.Endpoint(), "unix://") {
 		w.Hostname = "localhost"
+		w.DockerHost = w.Hostname // will be removed in a future update
 		return nil
 	}
 
