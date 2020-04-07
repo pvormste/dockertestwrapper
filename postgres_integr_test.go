@@ -2,9 +2,10 @@ package dockertestwrapper
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 var postgresImageTags = map[string]string{

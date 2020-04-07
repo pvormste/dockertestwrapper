@@ -1,11 +1,12 @@
 package dockertestwrapper
 
 import (
-	"github.com/ory/dockertest"
-	"github.com/ory/dockertest/docker"
+	"testing"
+
+	"github.com/ory/dockertest/v3"
+	"github.com/ory/dockertest/v3/docker"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 // ===========================

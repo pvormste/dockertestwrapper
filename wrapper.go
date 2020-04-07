@@ -1,10 +1,11 @@
 package dockertestwrapper
 
 import (
-	"github.com/ory/dockertest"
 	"net/url"
 	"strconv"
 	"strings"
+
+	"github.com/ory/dockertest/v3"
 )
 
 // DefaultContainerExpiresAfterSeconds tells docker the hard limit in seconds when the container should be purged
