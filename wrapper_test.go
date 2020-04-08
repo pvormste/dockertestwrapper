@@ -65,6 +65,15 @@ var wrapperInstanceDeterminePortTests = []struct {
 	doAssertions       func(t *testing.T, instance WrapperInstance, actualErr error)
 }{
 	{
+		it:                 "should return UnassignedPort when no container port is provided",
+		inputContainerPort: "",
+		internalHostPort:   "5432/tcp",
+		doAssertions: func(t *testing.T, instance WrapperInstance, actualErr error) {
+			assert.NoError(t, actualErr)
+			assert.Equal(t, UnassignedPort, instance.Port)
+		},
+	},
+	{
 		it:                 "should return error when container port is an invalid port",
 		inputContainerPort: "5432/tcp",
 		internalHostPort:   "5432/tcp",

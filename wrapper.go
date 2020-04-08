@@ -9,7 +9,11 @@ import (
 )
 
 // DefaultContainerExpiresAfterSeconds tells docker the hard limit in seconds when the container should be purged
-const DefaultContainerExpiresAfterSeconds uint = 1800
+const (
+	DefaultContainerExpiresAfterSeconds uint = 1800
+
+	UnassignedPort int = -1
+)
 
 // AfterInitActionFunc is a function type which will be executed after container initialization
 type AfterInitActionFunc func(hostname string, port int) error
@@ -98,6 +102,11 @@ func (w *WrapperInstance) determineHostname() error {
 }
 
 func (w *WrapperInstance) determinePort(containerPort string) (err error) {
+	if len(containerPort) == 0 {
+		w.Port = UnassignedPort
+		return
+	}
+
 	stringPort := w.Resource.GetPort(containerPort)
 	w.Port, err = strconv.Atoi(stringPort)
 	if err != nil {

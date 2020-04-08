@@ -3,6 +3,12 @@
 As the name suggests dockertestwrapper is a wrapper for [orys awesome dockertest library](https://github.com/ory/dockertest).  
 It provides an easy to use api to be used in your integration tests.
 
+## Install
+
+```go
+go get -u github.com/pvormste/dockertestwrapper/v2
+```
+
 ## Usage
 
 ### Postgres
