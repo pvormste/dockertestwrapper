@@ -1,4 +1,4 @@
-module github.com/pvormste/dockertestwrapper
+module github.com/pvormste/dockertestwrapper/v2
 
 go 1.14
 
