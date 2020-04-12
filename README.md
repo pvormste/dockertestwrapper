@@ -14,6 +14,7 @@ go get -u github.com/pvormste/dockertestwrapper/v2
 ### Postgres
 
 The postgres helper function can be used to start a postgres container with default credentials/connection details.
+Timezone defaults to `TZ=UTC`.
 
 Although it should be possible to start any postgres version with the `InitPostgresContainer` function, following
 images are covered by tests in this repository:

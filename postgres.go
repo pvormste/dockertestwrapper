@@ -23,11 +23,12 @@ func InitPostgresContainer(tag string) (*WrapperInstance, error) {
 	userEnv := fmt.Sprintf("POSTGRES_USER=%s", DefaultPostgresUser)
 	passwordEnv := fmt.Sprintf("POSTGRES_PASSWORD=%s", DefaultPostgresPassword)
 	databaseEnv := fmt.Sprintf("POSTGRES_DB=%s", DefaultPostgresDatabase)
+	timezoneEnv := fmt.Sprintf("TZ=UTC")
 
 	params := WrapperParams{
 		ImageName:           PostgresImageName,
 		ImageTag:            tag,
-		EnvVariables:        []string{userEnv, passwordEnv, databaseEnv},
+		EnvVariables:        []string{userEnv, passwordEnv, databaseEnv, timezoneEnv},
 		ContainerPort:       DefaultPostgresPort,
 		AfterInitActionFunc: postgresAfterInitAction,
 	}
