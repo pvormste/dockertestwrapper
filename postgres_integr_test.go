@@ -9,6 +9,8 @@ import (
 )
 
 var postgresImageTags = map[string]string{
+	"13":  "13-alpine",
+	"12":  "12-alpine",
 	"11":  "11-alpine",
 	"10":  "10-alpine",
 	"9.6": "9.6-alpine",

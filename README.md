@@ -18,6 +18,8 @@ Timezone defaults to `TZ=UTC`.
 
 Although it should be possible to start any postgres version with the `InitPostgresContainer` function, following
 images are covered by tests in this repository:
+  - postgres:13-alpine
+  - postgres:12-alpine
   - postgres:11-alpine
   - postgres:10-alpine
   - postgres:9.6-alpine
